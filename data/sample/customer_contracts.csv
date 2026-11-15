@@ -1,0 +1,4 @@
+Customer_Name;Total_Turbines;Contract_Target_Availability;Current_Down_Turbines;Contract_Month;Contract_Total_Months
+Customer Z;100;97;2;10;12
+Customer X;60;95;2;4;12
+Customer Y;80;98;1;8;12

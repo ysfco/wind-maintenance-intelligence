@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.streamlit/secrets.toml
+
+# generated results
+outputs/
+
+# real fleet or customer data must never be committed; only the two synthetic
+# demo sets are tracked
+data/*
+!data/sample/
+!data/fleet/
+
+.DS_Store
+Thumbs.db
+~$*.xlsx

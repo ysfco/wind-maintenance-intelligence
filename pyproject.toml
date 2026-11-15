@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "windmaint"
+version = "1.0.0"
+description = "Multi-criteria prioritisation, constraint-based scheduling and explainable backlog analysis for wind turbine maintenance."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Bilal Coşkunsu" }]
+keywords = ["wind energy", "maintenance planning", "decision support", "scheduling", "optimisation"]
+dependencies = [
+    "pandas>=2.1",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "openpyxl>=3.1",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dashboard = ["streamlit>=1.37", "plotly>=5.18", "pydeck>=0.8"]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+windmaint = "windmaint.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "dashboard", "tests"]

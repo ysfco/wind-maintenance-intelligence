@@ -1,0 +1,76 @@
+# Default configuration. Copy this file, change what you need and pass it with
+#   windmaint --config my_config.yaml run
+# Keys you leave out keep the values below. (tests/test_config.py checks that
+# this file and windmaint.config.DEFAULTS stay identical.)
+
+scoring:
+  # A damage with Current_Severity >= this value is "critical".
+  critical_severity_threshold: 4
+
+  # Technical_Score = 2*Max_Severity + 1.5*Increasing_Count
+  #                 + 1*Total_Damage_Count + 3*Critical_Count
+  technical_weights:
+    max_severity: 2.0
+    increasing_count: 1.5
+    total_damage_count: 1.0
+    critical_count: 3.0
+
+  # Final_Priority_Score weights. Must sum to 1.
+  weights:
+    technical: 0.60
+    contract: 0.25
+    due: 0.15
+
+  normalization:
+    # reference: fixed bounds, a turbine's score does not change when other
+    #            turbines are added or removed (recommended).
+    # minmax:    legacy behaviour, rescales against the current fleet.
+    method: reference
+    # Technical score treated as the worst realistic case (maps to 1.0).
+    # 25 ~ severity 5, four damages, three of them growing, two critical.
+    technical_reference_max: 25.0
+    # Upper end of the Priority_Boost scale in site_contracts.csv.
+    priority_boost_max: 2.0
+
+  ranking:
+    # true: every Critical turbine is ranked above every Non-Critical one;
+    # the score orders turbines inside each tier.
+    critical_first: true
+
+  # Display bands for the final score. Presentation only, not calibrated.
+  bands:
+    high: 0.70
+    medium: 0.40
+
+contracts:
+  # true: turbines with Max_Severity >= override_min_severity may be scheduled
+  # even when the customer's availability cap is exhausted. Such jobs are
+  # flagged (Contract_Override) and need customer approval.
+  critical_override: false
+  override_min_severity: 5
+
+scheduling:
+  horizon_days: 10           # planning days taken from weather.csv (fewer if it has fewer)
+  time_windows: [Morning, Afternoon]
+  scheduler: greedy          # greedy | milp
+  milp:
+    backlog_penalty_days: 10.0   # added to the worst in-horizon slot cost if unscheduled
+    late_penalty_per_day: 5.0    # extra cost per day after the due date
+    window_tiebreak: 0.1         # makes Morning preferable to Afternoon
+    critical_weight_bonus: 1.0   # added to the weight of Critical turbines
+    time_limit_s: 30
+
+weather:
+  # flag:  trust the Workable column of weather.csv
+  # rules: derive workability from the measurements with the profile below
+  workability_source: flag
+  rules:
+    default:
+      max_wind_speed: 12.0          # m/s
+      max_wind_gust: 18.0           # m/s
+      max_precip_probability: 60.0  # %
+      min_temperature: -10.0        # deg C
+  # Site status on the map (site_weather.csv snapshot).
+  site_status:
+    blocked_wind: 15.0
+    risky_wind: 10.0

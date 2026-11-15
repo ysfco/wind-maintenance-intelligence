@@ -1,0 +1,12 @@
+# Everything needed to run the engine and the dashboard without installing the
+# package (e.g. on Streamlit Community Cloud). For development prefer:
+#   pip install -e ".[dashboard,dev]"
+pandas>=2.1
+numpy>=1.24
+scipy>=1.11
+openpyxl>=3.1
+pyyaml>=6.0
+requests>=2.31
+streamlit>=1.37
+plotly>=5.18
+pydeck>=0.8

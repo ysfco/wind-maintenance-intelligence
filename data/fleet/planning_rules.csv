@@ -1,0 +1,5 @@
+Rule_ID;Category;Min_Increasing_Count;Max_Increasing_Count;Due_Days;Description
+R1;Critical;2;99;5;Critical + high trend
+R2;Critical;0;1;10;Critical + low trend
+R3;Non-Critical;2;99;14;Non-critical + high trend
+R4;Default;0;99;30;Default rule

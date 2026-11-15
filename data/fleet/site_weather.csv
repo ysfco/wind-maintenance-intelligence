@@ -1,0 +1,13 @@
+Site;Wind_Speed;Rain_Risk;Temperature
+AEG-01;14.1;Low;11.7
+AEG-02;14.9;Low;11.6
+AEG-03;14.3;Low;11.2
+AEG-04;10.6;Low;11.8
+MAR-01;8.7;Medium;9.2
+MAR-02;10.4;Medium;10.2
+MAR-03;9.2;Medium;7.2
+MAR-04;10.1;Medium;9.8
+MED-01;7.3;Medium;16.1
+MED-02;5.6;Medium;13.7
+CAN-01;3.8;Low;12.2
+CAN-02;3.2;Low;8.8

@@ -1,0 +1,7 @@
+Resource_ID;Resource_Type;Contractor;Region;Start_Point;Daily_Capacity;Team_Size
+CREW-AEG-1;Blade crew;In-house;Aegean;İzmir;1;4
+CREW-AEG-2;Rope access;Contractor North;Aegean;Manisa;1;3
+CREW-MAR-1;Blade crew;In-house;Marmara;Balıkesir;1;4
+CREW-MAR-2;Rope access;Contractor North;Marmara|Aegean;Çanakkale;1;3
+CREW-MED-1;Blade crew;Contractor South;Mediterranean;Hatay;1;4
+CREW-CAN-1;Blade crew;Contractor South;Central|Mediterranean;Kayseri;1;3

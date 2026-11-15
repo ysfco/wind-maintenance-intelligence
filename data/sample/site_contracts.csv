@@ -1,0 +1,5 @@
+Site;Customer_Name;Contract_Target_Availability;Current_Availability;Contract_Status;Priority_Boost;Description
+A;Customer Z;97;96.2;Below Target;2;Below availability target
+B;Customer Z;97;96.5;Below Target;2;Below availability target
+C;Customer X;95;96.8;Above Target;0;No contract pressure
+D;Customer Y;98;97.9;Slightly Below;1;Close to target, slightly below

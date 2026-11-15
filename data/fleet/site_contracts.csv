@@ -1,0 +1,13 @@
+Site;Customer_Name;Contract_Target_Availability;Current_Availability;Contract_Status;Priority_Boost
+AEG-01;Customer A;95.0;93.6;Below Target;2
+AEG-02;Customer A;95.0;96.5;Above Target;0
+AEG-03;Customer A;95.0;94.9;Slightly Below;1
+AEG-04;Customer B;95.0;95.7;Above Target;0
+MAR-01;Customer B;95.0;94.1;Below Target;2
+MAR-02;Customer B;95.0;94.9;Slightly Below;1
+MAR-03;Customer C;96.0;96.2;Above Target;0
+MAR-04;Customer C;96.0;95.3;Below Target;2
+MED-01;Customer D;95.0;94.6;Slightly Below;1
+MED-02;Customer D;95.0;95.9;Above Target;0
+CAN-01;Customer E;97.0;97.7;Above Target;0
+CAN-02;Customer E;97.0;97.2;Above Target;0
