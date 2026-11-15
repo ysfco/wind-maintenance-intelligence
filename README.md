@@ -38,7 +38,8 @@ engineer keeps the decision. Türkçe özet: [README.tr.md](README.tr.md).
 ## Quick start
 
 ```bash
-git clone <your-repo-url> && cd wind-maintenance-intelligence
+git clone https://github.com/ysfco/wind-maintenance-intelligence.git
+cd wind-maintenance-intelligence
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -e ".[dashboard,dev]"
 
