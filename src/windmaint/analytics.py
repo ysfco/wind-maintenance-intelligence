@@ -33,7 +33,7 @@ def site_overview(result: RunResult) -> pd.DataFrame:
     )
     sites["Critical_Backlog"] = sites["Site"].map(critical_backlog).fillna(0).astype(int)
     sites["Site_Status"] = "On plan"
-    sites.loc[(sites["Backlog"] > 0) | (sites["Critical"] > 0), "Site_Status"] = "Attention"
+    sites.loc[sites["Backlog"] > 0, "Site_Status"] = "Backlog"
     sites.loc[sites["Critical_Backlog"] > 0, "Site_Status"] = "Critical backlog"
 
     ds = result.dataset

@@ -8,7 +8,7 @@ from windmaint.analytics import site_overview
 
 _COLOURS = {
     "Critical backlog": STATUS["critical"],
-    "Attention": STATUS["warning"],
+    "Backlog": STATUS["warning"],
     "On plan": STATUS["good"],
 }
 
@@ -71,11 +71,28 @@ def render(result, context) -> None:
                     )
                 },
             )
-            st.caption("🔴 critical turbine in backlog · 🟠 backlog or critical work · 🟢 on plan")
+            st.caption(
+                "🔴 critical turbine in backlog · 🟠 jobs in backlog · 🟢 every job scheduled"
+            )
             show_map(deck)
 
     st.subheader("Site summary")
-    show_table(sites.drop(columns=["Latitude", "Longitude"], errors="ignore").round(2))
+    table = sites.drop(columns=["Latitude", "Longitude"], errors="ignore").round(2)
+    show_table(
+        table.rename(
+            columns={
+                "Customer_Name": "Customer",
+                "Max_Priority": "Highest score",
+                "Average_Priority": "Average score",
+                "Critical_Backlog": "Critical in backlog",
+                "Site_Status": "Status",
+                "Wind_Speed": "Wind (m/s)",
+                "Rain_Risk": "Rain risk",
+                "Temperature": "Temp (°C)",
+                "Weather_Status": "Weather",
+            }
+        )
+    )
     st.caption(
         "Weather status here comes from the site snapshot (site_weather.csv). The scheduler "
         "uses the slot-level table (weather.csv) instead."

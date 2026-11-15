@@ -32,6 +32,7 @@ def test_recommendations_are_derived_from_the_plan(sample, cfg):
     assert set(recs.index) == set(result.plan["Turbine_ID"])
     assert recs.loc["T5", "Level"] == "Escalate"
     assert "no outage budget" in recs.loc["T5", "Actions"]
+    assert "turn on the critical override" in recs.loc["T5", "Actions"]  # severity 5
     assert "T2" in recs.loc["T1", "Actions"]  # names the job that uses the cap
     assert recs.loc["T2", "Level"] == "On track"
     assert "Team_4" in recs.loc["T2", "Headline"]
@@ -113,7 +114,8 @@ def test_dashboard_aggregations(sample, cfg):
     sites = site_overview(result).set_index("Site")
     assert sites.loc["D", "Site_Status"] == "Critical backlog"
     assert sites.loc["B", ["Jobs", "Scheduled", "Backlog"]].tolist() == [2, 2, 0]
-    assert sites.loc["B", "Site_Status"] == "Attention"  # has a critical turbine
+    assert sites.loc["B", "Site_Status"] == "On plan"  # critical, but scheduled
+    assert sites.loc["C", "Site_Status"] == "Critical backlog"
     assert sites.loc["C", "Weather_Status"] == "Maintenance Blocked"
     assert {"Latitude", "Longitude"} <= set(sites.columns)
 

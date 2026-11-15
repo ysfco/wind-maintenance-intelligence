@@ -41,7 +41,23 @@ def _competitors(plan: pd.DataFrame, row: Mapping[str, Any], day: str) -> list[s
     return same["Turbine_ID"].astype(str).tolist()
 
 
-def _backlog_advice(plan: pd.DataFrame, row: Mapping[str, Any]) -> tuple[list[str], list[str]]:
+def _override_hint(row: Mapping[str, Any], cfg: Mapping[str, Any]) -> str:
+    """Mention the critical override only where it would actually apply."""
+    contracts = cfg["contracts"]
+    minimum = float(contracts["override_min_severity"])
+    if float(row["Max_Severity"]) < minimum:
+        return (
+            f"The critical override does not apply (max severity {int(row['Max_Severity'])} "
+            f"< {int(minimum)})."
+        )
+    if contracts["critical_override"]:
+        return ""
+    return "Alternatively, turn on the critical override (Scenario → Model options)."
+
+
+def _backlog_advice(
+    plan: pd.DataFrame, row: Mapping[str, Any], cfg: Mapping[str, Any]
+) -> tuple[list[str], list[str]]:
     rationale: list[str] = []
     actions: list[str] = []
     slots = int(row.get("Slots_Checked") or 0)
@@ -63,9 +79,11 @@ def _backlog_advice(plan: pd.DataFrame, row: Mapping[str, Any]) -> tuple[list[st
         rationale.append(
             f"{customer} has no outage budget left: every slot fails the availability cap."
         )
+        hint = _override_hint(row, cfg)
         actions.append(
             "The contract leaves no outage budget, so no schedule can place this turbine. "
-            "Request a customer-approved outage, or enable contracts.critical_override."
+            "Request a customer-approved outage or a temporary outage allowance."
+            + (f" {hint}" if hint else "")
         )
     elif near == "Contract availability cap":
         day = str(near_slot).split(" ")[0]
@@ -162,7 +180,7 @@ def recommend(
         else:
             level = "Escalate" if critical else "Action"
             headline = f"Not scheduled within the {horizon}-day horizon"
-            more_rationale, more_actions = _backlog_advice(plan, row)
+            more_rationale, more_actions = _backlog_advice(plan, row, cfg)
             rationale.extend(more_rationale)
             actions.extend(more_actions)
             if due <= horizon:

@@ -28,7 +28,7 @@ def render(result, context) -> None:
             ("Late", k["late"], "Scheduled after the recommended due day."),
             (
                 "Plan cost (fleet)",
-                result.kpis["plan_cost"],
+                f"{result.kpis['plan_cost']:.1f}",
                 "Weighted delay + backlog cost over all jobs. Lower is better.",
             ),
         ]

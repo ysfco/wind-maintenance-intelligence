@@ -142,3 +142,22 @@ def test_generator_builds_a_valid_fleet(tmp_path):
     assert result.kpis["planning_days"][0] == "2026-05-04" and len(result.kpis["planning_days"]) == 5
     assert result.kpis["scheduled"] > 0
     assert_feasible(result)
+
+
+def test_override_is_not_suggested_where_it_cannot_apply(both):
+    _, results, _ = both
+    recs = results["milp"].recommendations.set_index("Turbine_ID")
+    for turbine in ("CAN01-T04", "CAN02-T05"):  # severity 4, customer without budget
+        text = recs.loc[turbine, "Actions"]
+        assert "no outage budget" in text
+        assert "does not apply" in text and "turn on the critical override" not in text
+
+
+def test_map_status_reflects_the_plan(both):
+    from windmaint.analytics import site_overview
+
+    _, results, _ = both
+    sites = site_overview(results["milp"]).set_index("Site")
+    assert set(sites.loc[["CAN-01", "CAN-02"], "Site_Status"]) == {"Critical backlog"}
+    assert (sites.loc[sites["Backlog"] == 0, "Site_Status"] == "On plan").all()
+    assert sites["Site_Status"].nunique() == 3

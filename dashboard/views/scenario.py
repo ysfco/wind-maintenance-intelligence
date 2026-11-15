@@ -27,6 +27,7 @@ def render(result, context) -> None:
         }
     )
     view["Priority covered"] = (100 * view["Priority covered"]).round(0).astype(int).astype(str) + " %"
+    view["Plan cost"] = view["Plan cost"].round(1)
     show_table(view)
 
     cols = ["Turbine_ID", "Category", "Scheduled_Day", "Scheduled_Window", "Due_Status"]
